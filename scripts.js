@@ -27,12 +27,26 @@
         const resetMoves = () => {
             remainingMoves = 9;
         }
+        const getMoves = () => remainingMoves;
+
+        const resetBoard = () => {
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    cellArray[row][col].mark = '-';
+                    cellArray[row][col].occupied = false;
+                }
+            }
+        }
     
-        return {getArray, getCell, setCell, decreaseMoves, resetMoves};
+        return {getArray, getCell, setCell, decreaseMoves, resetMoves, resetBoard, getMoves};
     }
     
     const player = (name, mark) => {
-        return {name, mark}
+        const getName = () => name;
+        const updateName = (newName) => {
+            name = newName;
+        }
+        return {mark, updateName, getName};
     }
 
     const board = gameBoard();
@@ -64,10 +78,19 @@
             gameOver = true;
             console.log("victory achieved!");
             setTimeout(function() {
-                alert(`${currentTurn.name} (${currentTurn.mark}) is the winner!`)
-            }, 5);
-            
+                alert(`${currentTurn.getName()} (${currentTurn.mark}) is the winner!`)
+            }, 10);
             return;
+        }
+
+        board.decreaseMoves();
+        if (board.getMoves() == 0) {
+            gameOver = true;
+            console.log("tie!");
+            setTimeout(function() {
+                alert(`The game is tied!`)
+            }, 10);
+            return
         }
         swapPlayer();
     }
@@ -202,9 +225,56 @@
         return true;
     }
 
+    function resetGame() {
+        let cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            if (cell.firstChild) {
+                cell.removeChild(cell.firstChild);
+            }
+        })
+        board.resetBoard();
+        board.resetMoves();
+        currentTurn = player1;
+        gameOver = false;
+    }
+
+    function checkNames() {
+        let p1 = document.getElementById("p1name").value;
+        let p2 = document.getElementById("p2name").value;
+
+        console.log("p1 name", p1);
+
+        if (!p1) {
+            p1 = 'Player 1';
+        }
+        if (!p2) {
+            p2 = 'Player 2';
+        }
+
+        return [p1, p2];
+    }
+
+    function startGame() {
+        resetGame();
+        
+        let names = checkNames();
+
+        player1.updateName(names[0]);
+        player2.updateName(names[1]);
+    }
+
     let cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
         cell.addEventListener("click", markCell);
     })
+
+    let start = document.getElementById("start");
+    start.addEventListener("click", (e) => {
+        e.preventDefault();
+        startGame();
+    });
+
+    let reset = document.getElementById("reset");
+    reset.addEventListener("click", resetGame);
 })();
 

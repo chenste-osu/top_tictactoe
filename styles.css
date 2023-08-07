@@ -9,6 +9,7 @@ html, body {
     height: 100%;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -36,4 +37,16 @@ html, body {
     text-align: center;
     position: absolute;
     pointer-events: none;
+    font-family: "Helvetica", sans-serif;
+}
+
+form {
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#reset {
+    margin: 20px;
 }

@@ -9,6 +9,19 @@
 </head>
 <body>
     <div class="container">
+        <form>
+            <div class="nameInput">
+                <div class="p1container">
+                    <label for="p1name">Player 1 Name:</label>
+                    <input type="text" id="p1name" placeholder="P1">
+                </div>
+                <div class="p2container">
+                    <label for="p2name">Player 2 Name:</label>
+                    <input type="text" id="p2name" placeholder="P2">
+                </div>
+            </div>
+            <button id="start">Start</button>
+        </form>
         <div class="board">
             <div class="cell" id="00"></div>
             <div class="cell" id="01"></div>
@@ -20,6 +33,8 @@
             <div class="cell" id="21"></div>
             <div class="cell" id="22"></div>
         </div>
+
+        <button id="reset">Reset!</button>
     </div>
 </body>
 </html>
